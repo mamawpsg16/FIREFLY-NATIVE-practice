@@ -1,20 +1,28 @@
 <?php
+
 include_once "../classes/Crud.php";
-include_once("../classes/TypeValidator.php");
+include_once("../classes/ItemValidator.php");
 
 $crud = new Crud();
+
+//fetching data in descending order (lastest entry first)
+$query = "SELECT id, CONCAT(code,':',description) AS type FROM types ORDER BY id asc";
+$types = $crud->getData($query);
+
 if (isset($_POST['submit'])) {
     $code = $_POST['code'];
     $description = $_POST['description'];
+    $type_id = $_POST['type_id'];
     $_POST['operation'] = 'create';
-    $validation = new TypeValidator($_POST);
+    $validation = new ItemValidator($_POST);
     $errors = $validation->validateForm();
 
     if (!array_filter($errors)) {
         //insert data to database	
-        $result = $crud->createType($code, $description);
+        $result = $crud->createItem($code, $description, $type_id);
         $_POST['code'] = '';
         $_POST['description'] = '';
+        $_POST['type_id'] = '';
         $_POST['submit'] = '';
         //display success message
         echo "<p  color='green'>Data added successfully</p>.";
@@ -34,11 +42,20 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-    <?php
-    // print_r($errors);
-    ?>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <div id="add-container">
+            <p for="type">Types</p>
+            <select name="type_id">
+                <?php
+                foreach ($types as $type) { ?>
+                    <option value="<?= $type['id'] ?>"><?= $type['type'] ?></option>
+                <?php
+                } ?>
+            </select>
+            <div class="error">
+                <?php echo $errors['type_id'] ?? '' ?>
+            </div>
+
             <p for="code">Code</p>
             <input type="text" id="code" name="code" placeholder="Enter code" value="<?php echo (!empty($_POST['code'])) ? htmlspecialchars($_POST['code']) : '' ?>" required>
             <div class="error">
@@ -49,7 +66,7 @@ if (isset($_POST['submit'])) {
             </div>
             <p for="lname">Description</p>
             <textarea name="description" id="" cols="10" rows="5" required><?php echo (!empty($_POST['description'])) ? htmlspecialchars($_POST['description']) : '' ?></textarea>
-            <!-- <input type="text" id="description" name="description" placeholder="Enter description" value="<?php echo (!empty($_POST['description'])) ? htmlspecialchars($_POST['description']) : '' ?>" required> -->
+            <!-- <input type="text" id="description" name="description" placeholder="Enter description" > -->
             <div class="error">
                 <?php echo $errors['description'] ?? '' ?>
             </div>

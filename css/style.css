@@ -11,6 +11,9 @@ table {
   width: 100%;
 }
 
+table tbody tr td{
+  padding:20px;
+}
 table td,
 table th {
   border: 1px solid #ddd;
@@ -82,8 +85,32 @@ input[type="submit"]:hover {
 
 .error {
   color: red;
+  margin-bottom:5px;
 }
 
 .center {
   text-align: center;
+}
+form{
+  margin-top:20px;
+}
+
+.session-success{
+  width:100%;
+  margin:auto;
+}
+
+a{
+  text-decoration: none;
+  color: #000;
+  padding: 10px;
+  border-radius:10%;
+}
+
+.delete-btn{
+  background-color:rgba(255, 0, 0, 0.815);
+}
+
+.edit-btn{
+  background-color:rgb(0, 174, 255);
 }
