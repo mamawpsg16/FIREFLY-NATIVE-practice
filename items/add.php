@@ -10,6 +10,9 @@ $query = "SELECT id, CONCAT(code,': ',description) AS type FROM types ORDER BY i
 $types = $crud->getData($query);
 
 if (isset($_POST['submit'])) {
+    if(!isset($_POST['type_id'])){
+        $type_id_error = 'Setup Types First';
+    }
     $code = $_POST['code'];
     $description = $_POST['description'];
     $type_id = $_POST['type_id'];
@@ -45,7 +48,7 @@ if (isset($_POST['submit'])) {
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <div id="add-container">
             <p for="type">Types</p>
-            <select name="type_id">
+            <select name="type_id" required>
                 <?php
                 foreach ($types as $type) { ?>
                     <option value="<?= $type['id'] ?>"><?= $type['type'] ?></option>

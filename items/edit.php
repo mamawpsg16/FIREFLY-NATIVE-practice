@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($item['id']); ?>">
         <div id="add-container">
             <p for="type">Types</p>
-            <select name="type_id">
+            <select name="type_id" required>
                 <?php
                 foreach ($types as $type) { ?>
                 <?php print_r($type)?>
