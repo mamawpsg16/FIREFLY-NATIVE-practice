@@ -55,8 +55,6 @@ class TypeValidator extends Db
         } else {
             if (preg_match('/[^a-z0-9 ]/i', $description)) {
                 $this->addError('description', 'description may only contain alphanumeric characters or space!');
-            } else if (strlen($description) > 50 || strlen($description) < 5) {
-                $this->addError('description', 'code must be 5 - 50 characters only!');
             }
         }
     }

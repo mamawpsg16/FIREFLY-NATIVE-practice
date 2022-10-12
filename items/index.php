@@ -17,7 +17,7 @@ $items = $crud->getData($query);
 
 <head>
     <script type="text/javascript">
-        if(isset($_SESSION['update_success'])){
+        if (isset($_SESSION['update_success'])) {
             unset('update_success');
         }
     </script>
@@ -30,9 +30,11 @@ $items = $crud->getData($query);
 
     if (isset($_SESSION['update_success'])) {
         echo "<p  color='green' class='session-success'>Data Updated Successfully</p>.";
+        unset($_SESSION['update_success']);
     }
     if (isset($_SESSION['deleted_success'])) {
         echo "<p  color='green' class='session-success'>Data Deleted Successfully</p>.";
+        unset($_SESSION['deleted_success']);
     }
     ?>
     <div id="btn-container">

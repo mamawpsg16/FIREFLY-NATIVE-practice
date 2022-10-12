@@ -6,7 +6,7 @@ include_once("../classes/ItemValidator.php");
 $crud = new Crud();
 
 //fetching data in descending order (lastest entry first)
-$query = "SELECT id, CONCAT(code,':',description) AS type FROM types ORDER BY id asc";
+$query = "SELECT id, CONCAT(code,': ',description) AS type FROM types ORDER BY id asc";
 $types = $crud->getData($query);
 
 if (isset($_POST['submit'])) {

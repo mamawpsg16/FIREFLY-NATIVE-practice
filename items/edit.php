@@ -5,7 +5,7 @@ include_once("../classes/ItemValidator.php");
 session_start();
 // check GET request id parameter
 $crud = new Crud();
-$query = "SELECT id, CONCAT(code,':',description) AS type FROM types ORDER BY id asc";
+$query = "SELECT id, CONCAT(code,' : ',description) AS type FROM types ORDER BY id asc";
 $types = $crud->getData($query);
 if (isset($_GET['id'])) {
 
@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
         $result = $crud->updateItem($code, $description, $id, $type_id);
         if ($result) {
             header("Location: index.php");
-            echo "<p  color='green'>Data updated successfully</p>.";
+            $_SESSION["update_success"] = "Updated.";
         }
     }
 }

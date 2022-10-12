@@ -34,9 +34,9 @@ $types = $crud->getData($query);
     <table>
         <thead>
             <tr>
-                <td>CODE</td>
-                <td>DESCRIPTION</td>
-                <td>ACTIONS</td>
+                <td width="30%">CODE</td>
+                <td width="50%">DESCRIPTION</td>
+                <td width="20%">ACTIONS</td>
             </tr>
         </thead>
         <tbody>
