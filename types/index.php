@@ -12,7 +12,7 @@ $types = $crud->getData($query);
 <html>
 
 <head>
-    <title>Types</title>
+    <title>TYPES</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
@@ -20,11 +20,11 @@ $types = $crud->getData($query);
     <?php
 
     if (isset($_SESSION['update_success'])) {
-        echo "<p  color='green' class='session-success'>Data Updated Successfully</p>.";
+        echo "<p  class='session-success'>Data Updated Successfully</p>.";
         unset($_SESSION['update_success']);
     }
     if (isset($_SESSION['deleted_success'])) {
-        echo "<p  color='green' class='session-success'>Data Deleted Successfully</p>.";
+        echo "<p  class='session-success'>Data Deleted Successfully</p>.";
         unset($_SESSION['deleted_success']);
     }
     ?>

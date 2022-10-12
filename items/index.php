@@ -21,7 +21,7 @@ $items = $crud->getData($query);
             unset('update_success');
         }
     </script>
-    <title>items</title>
+    <title>ITEMS</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 

@@ -17,8 +17,8 @@ if (isset($_POST['submit'])) {
         $_POST['description'] = '';
         $_POST['submit'] = '';
         //display success message
-        echo "<p  color='green'>Data added successfully</p>.";
-        echo "<br/><a href='index.php'>View Result</a>";
+        echo "<p  class='session-success'>Data added successfully</p>.";
+        echo "<br/><a href='index.php' class='index-btn'>VIEW TYPES</a>";
     }
 }
 ?>
