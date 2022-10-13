@@ -10,16 +10,14 @@ $query = "SELECT id, CONCAT(code,': ',description) AS type FROM types ORDER BY i
 $types = $crud->getData($query);
 
 if (isset($_POST['submit'])) {
-    if(!isset($_POST['type_id'])){
-        $type_id_error = 'Setup Types First';
-    }
+
     $code = $_POST['code'];
     $description = $_POST['description'];
-    $type_id = $_POST['type_id'];
+    $type_id = !empty($_POST['type_id']) ? $_POST['type_id'] :  ' ' ;
+    $_POST['type_id'] = !empty($_POST['type_id']) ? $_POST['type_id'] :  'error';
     $_POST['operation'] = 'create';
     $validation = new ItemValidator($_POST);
     $errors = $validation->validateForm();
-
     if (!array_filter($errors)) {
         //insert data to database	
         $result = $crud->createItem($code, $description, $type_id);
@@ -41,14 +39,13 @@ if (isset($_POST['submit'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
-    <title>Create Type</title>
+    <title>Create Item</title>
 </head>
-
 <body>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <div id="add-container">
             <p for="type">Types</p>
-            <select name="type_id" required>
+            <select name="type_id" >
                 <?php
                 foreach ($types as $type) { ?>
                     <option value="<?= $type['id'] ?>"><?= $type['type'] ?></option>
@@ -56,7 +53,7 @@ if (isset($_POST['submit'])) {
                 } ?>
             </select>
             <div class="error">
-                <?php echo $errors['type_id'] ?? '' ?>
+                <?php echo $errors['type'] ?? '' ?>
             </div>
 
             <p for="code">Code</p>

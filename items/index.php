@@ -16,11 +16,6 @@ $items = $crud->getData($query);
 <html>
 
 <head>
-    <script type="text/javascript">
-        if (isset($_SESSION['update_success'])) {
-            unset('update_success');
-        }
-    </script>
     <title>ITEMS</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -53,20 +48,23 @@ $items = $crud->getData($query);
         <tbody>
             <?php
             if ($items) {
-                foreach ($items as $key => $item) {
-                    echo "<tr>";
-                    echo "<td>" . $item['type_code'] . "</td>";
-                    echo "<td>" . $item['type_description'] . "</td>";
-                    echo "<td>" . $item['code'] . "</td>";
-                    echo "<td>" . $item['description'] . "</td>";
-                    echo "<td><a href=\"edit.php?id=$item[id]\" class='edit-btn'>Edit</a> <a href=\"delete.php?id=$item[id]\" class='delete-btn'>Delete</a>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr>";
-                echo "<td colspan='5' class='center'>" . "No Data" . "</td>";
-                echo "</tr>";
-            }
+                foreach ($items as $key => $item) { ?>
+                    <tr>
+                        <td> <?php echo $item['type_code']; ?></td>
+                        <td> <?php echo $item['type_description']; ?></td>
+                        <td> <?php echo $item['code']; ?> </td>
+                        <td> <?php echo $item['description']; ?></td>
+                        <td> 
+                            <a href="edit.php?id=<?php echo $item['id'] ?>" class='edit-btn'>Edit</a>
+                            <a href="delete.php?id=<?php echo $item['id'] ?>" class='delete-btn'>Delete</a>
+                        </td>
+                    </tr>
+                <?php }  ?>
+            <?php } else { ?>
+                <tr>
+                    <td colspan='5' class='center'>No Data</td>
+                </tr>
+            <?php }
             ?>
             <?php
             ?>

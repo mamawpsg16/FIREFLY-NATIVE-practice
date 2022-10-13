@@ -33,20 +33,23 @@ class ItemValidator extends Db
         $type_id = trim($this->data['type_id']);
         if (empty($type_id)) {
             $this->addError('type', 'type is required!');
+        }else{
+            if($type_id == 'error'){
+                $this->addError('type', 'setup type first!');
+            }
         }
     }
     private function validateCode()
     {
         $code = trim($this->data['code']);
-
-        $validate_code = $this->checkCode($code,$this->data['operation']);
+        $validate_code = $this->checkCode($code,$this->data['operation'],isset($this->data['id']) ? $this->data['id'] : null );
         if ($validate_code) {
             $this->addError('code_taken', 'code is already taken!');
         }
 
         if (empty($code)) {
             $this->addError('code', 'code is required!');
-        }else {
+        }else{
             if(preg_match('/[^a-z_0-9 ]/i', $code)){
                 $this->addError('code', 'code may only contain alphanumeric characters!');
             }else if(strlen($code) > 10 || strlen($code) < 2){
@@ -70,17 +73,14 @@ class ItemValidator extends Db
     private function checkCode($code,$operation,$id = null)
     {
         if ($operation == 'create'){
-            $sql = 'SELECT code FROM items WHERE code = :code;';
+            $sql = "SELECT code FROM items WHERE code = '$code'";
         }else{
-            $sql = 'SELECT code FROM items WHERE code = :code AND id != :id;';
+            $sql = "SELECT code FROM items WHERE code = '$code' AND id != $id";
         }
+
         $stmt = $this->connection()->prepare($sql);
         
-        if ($operation == 'create'){
-            $stmt->execute([':code' => $code]);
-        }else{
-            $stmt->execute([':code' => $code, 'id' => $id]);
-        }
+        $stmt->execute();
 
         if (!$stmt) {
             $stmt = null;
@@ -90,10 +90,10 @@ class ItemValidator extends Db
         if ($stmt->rowCount() == 0) {
             return false;
         }
+
         return true;
     }
 
-   
     private function addError($key, $value)
     {
         $this->errors[$key] = $value;

@@ -31,7 +31,7 @@ class TypeValidator extends Db
     {
         $code = trim($this->data['code']);
 
-        $validate_code = $this->checkCode($code,$this->data['operation']);
+        $validate_code = $this->checkCode($code,$this->data['operation'], isset($this->data['id']) ? $this->data['id'] : null);
         if ($validate_code) {
             $this->addError('code_taken', 'code is already taken!');
         }
@@ -62,17 +62,14 @@ class TypeValidator extends Db
     private function checkCode($code,$operation,$id = null)
     {
         if ($operation == 'create'){
-            $sql = 'SELECT code FROM types WHERE code = :code;';
+            $sql = "SELECT code FROM types WHERE code = '$code'";
         }else{
-            $sql = 'SELECT code FROM types WHERE code = :code AND id != :id;';
+            $sql = "SELECT code FROM types WHERE code = '$code' AND id != $id";
         }
+
         $stmt = $this->connection()->prepare($sql);
         
-        if ($operation == 'create'){
-            $stmt->execute([':code' => $code]);
-        }else{
-            $stmt->execute([':code' => $code, 'id' => $id]);
-        }
+        $stmt->execute();
         
         if (!$stmt) {
             $stmt = null;

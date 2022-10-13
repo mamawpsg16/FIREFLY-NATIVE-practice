@@ -8,7 +8,6 @@ $crud = new Crud();
 $query = "SELECT id, CONCAT(code,' : ',description) AS type FROM types ORDER BY id asc";
 $types = $crud->getData($query);
 if (isset($_GET['id'])) {
-
     $id = $_GET['id'];
     $db  = new Db();
     $stmt = $db->connection()->prepare("SELECT Items.id, Items.type_id,  Items.code, Items.description , Types.code AS type_code, Types.description AS type_description
@@ -23,6 +22,7 @@ if (isset($_POST['submit'])) {
     $description = $_POST['description'];
     $type_id = $_POST['type_id'];
     $_POST['operation'] = 'update';
+    $_POST['id'] = $_GET['id'];
     $validation = new ItemValidator($_POST);
     $errors = $validation->validateForm();
 
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
-    <title>Edit Type</title>
+    <title>Edit Item</title>
 </head>
 
 <body>
@@ -56,7 +56,6 @@ if (isset($_POST['submit'])) {
             <select name="type_id" required>
                 <?php
                 foreach ($types as $type) { ?>
-                <?php print_r($type)?>
                 <option value="<?= $type['id'] ?>" <?php if($item['type_id'] == $type['id']){ ?> selected="selected" <?php }?>><?= $type['type'] ?></option>
                 <?php
                 } ?>

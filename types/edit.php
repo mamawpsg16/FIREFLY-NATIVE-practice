@@ -16,6 +16,7 @@ if (isset($_POST['submit'])) {
     $code = $_POST['code'];
     $description = $_POST['description'];
     $_POST['operation'] = 'update';
+    $_POST['id'] = $_GET['id'];
     $validation = new TypeValidator($_POST);
     $errors = $validation->validateForm();
 

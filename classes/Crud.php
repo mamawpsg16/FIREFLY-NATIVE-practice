@@ -73,8 +73,7 @@ class Crud extends Db
 
 	public function updateItem($code, $description, $id, $type_id)
 	{
-		print_r($type_id);
-		$sql = 'UPDATE items SET  type_id = :type_id, code = :code , description = :description WHERE id = :id;';
+		$sql = 'UPDATE items SET  type_id = :type_id, code = :code , description = :description WHERE id = :id';
 		$stmt = $this->connection()->prepare($sql);
 		$stmt->execute([':type_id' => $type_id, ':code' => $code, ':description' => $description, ':id' => $id]);
 

@@ -42,26 +42,21 @@ $types = $crud->getData($query);
         <tbody>
             <?php
             if ($types) {
-                foreach ($types as $key => $type) {
-                    $code = str_replace(array(
-                        '\'', '"',
-                        ',', ';', '<', '>'
-                    ), ' ', $type['code']);
-                    $description = str_replace(array(
-                        '\'', '"',
-                        ',', ';', '<', '>'
-                    ), ' ', $type['description']);
-                    echo "<tr>";
-                    echo "<td>" . $code . "</td>";
-                    echo "<td>" . $description . "</td>";
-                    echo "<td><a href=\"edit.php?id=$type[id]\" class='edit-btn'>Edit</a> <a href=\"delete.php?id=$type[id]\" class='delete-btn'>Delete</a>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr>";
-                echo "<td colspan='3' class='center'>" . "No Data" . "</td>";
-                echo "</tr>";
-            }
+                foreach ($types as $key => $type) { ?>
+                    <tr>
+                        <td> <?php echo $type['code']; ?> </td>
+                        <td> <?php echo $type['description']; ?></td>
+                        <td> 
+                            <a href="edit.php?id=<?php echo $type['id'] ?>" class='edit-btn'>Edit</a>
+                            <a href="delete.php?id=<?php echo $type['id'] ?>" class='delete-btn'>Delete</a>
+                        </td>
+                    </tr>
+                <?php }  ?>
+            <?php } else { ?>
+                <tr>
+                    <td colspan='5' class='center'>No Data</td>
+                </tr>
+            <?php }
             ?>
             <?php
             ?>
